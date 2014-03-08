@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Sonata</string>
+    <string name="start_stopwatch">recognise music</string>
+    <string name="stop">Stop Music</string>
+    <string name="take_photo">take a photo</string>
+</resources>
