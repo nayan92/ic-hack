@@ -35,6 +35,12 @@
             android:enabled="true" >
         </activity>
 
+        <activity
+            android:name="com.sat.sonata.TakePictureActivity"
+            android:label="TEST"
+            android:enabled="true">
+        </activity>
+
         <service
             android:name="com.sat.sonata.StopwatchService"
             android:icon="@drawable/ic_lap"

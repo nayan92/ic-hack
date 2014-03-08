@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.util.Log;
 
 /**
@@ -52,6 +53,8 @@ public class StopwatchService extends Service {
         return null;
     }
 
+    private static final int TAKE_PICTURE_REQUEST = 1;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (mLiveCard == null) {
@@ -61,10 +64,15 @@ public class StopwatchService extends Service {
             // Keep track of the callback to remove it before unpublishing.
             mCallback = new ChronometerDrawer(this);
             mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mCallback);
-            // TODO Start the camera activity
-            Intent menuIntent = new Intent(this, MenuActivity.class);
-            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
+
+            Intent cameraIntent = new Intent(this, TakePictureActivity.class);
+            cameraIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Log.d("SITTING", "Starting TakePictureActivity from the service");
+            startActivity(cameraIntent);
+
+//            Intent menuIntent = new Intent(this, MenuActivity.class);
+//            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
 
             mLiveCard.publish(PublishMode.REVEAL);
             Log.d(TAG, "Done publishing LiveCard");
