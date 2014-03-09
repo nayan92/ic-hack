@@ -84,6 +84,7 @@ public class ChronometerView extends FrameLayout {
         updateText();
     }
 
+
     /**
      * Get the base value of the chronometer in milliseconds.
      */

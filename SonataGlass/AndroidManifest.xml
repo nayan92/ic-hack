@@ -36,6 +36,13 @@
         </activity>
 
         <activity
+            android:name="com.sat.sonata.RecogniseMusicActivity"
+            android:label="KAVINDU"
+            android:enabled="true">
+        </activity>
+
+
+        <activity
             android:name="com.sat.sonata.TakePictureActivity"
             android:label="TEST"
             android:enabled="true">

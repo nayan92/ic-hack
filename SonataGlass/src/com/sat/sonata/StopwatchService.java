@@ -57,31 +57,35 @@ public class StopwatchService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (mLiveCard == null) {
-            Log.d(TAG, "Publishing LiveCard");
-            mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
+//        if (mLiveCard == null) {
+//            Log.d(TAG, "Publishing LiveCard");
+//            mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
 
-            // Keep track of the callback to remove it before unpublishing.
-            mCallback = new ChronometerDrawer(this);
-            mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mCallback);
+            Intent recogniseMusicIntent = new Intent(this, RecogniseMusicActivity.class);
+            recogniseMusicIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(recogniseMusicIntent);
 
-            Intent cameraIntent = new Intent(this, TakePictureActivity.class);
-            cameraIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            Log.d("SITTING", "Starting TakePictureActivity from the service");
-            startActivity(cameraIntent);
 
+//            Intent cameraIntent = new Intent(this, TakePictureActivity.class);
+//
+//            cameraIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            Log.d("SITTING", "Starting TakePictureActivity from the service");
+//            startActivity(cameraIntent);
+//
 //            Intent menuIntent = new Intent(this, MenuActivity.class);
 //            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //            mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
 
-            mLiveCard.publish(PublishMode.REVEAL);
-            Log.d(TAG, "Done publishing LiveCard");
-        } else {
-            // TODO(alainv): Jump to the LiveCard when API is available.
-        }
+//            mLiveCard.publish(PublishMode.REVEAL);
+//            Log.d(TAG, "Done publishing LiveCard");
+//        } else {
+//            // TODO(alainv): Jump to the LiveCard when API is available.
+//        }
 
         return START_STICKY;
     }
+
+
 
     @Override
     public void onDestroy() {
