@@ -27,9 +27,13 @@ app.post('/picupload', function(req, res) {
 	  var newPath = __dirname + "/uploads/"+nextFileCounter+".jpg";
 	  fs.writeFile(newPath, data, function (err) {
 	    var child = spawn('bash', ['translate.sh', 'uploads/'+nextFileCounter+".jpg", nextFileCounter++, 'http://129.31.195.224:'+server.address().port]);
+	    console.log("Kavi check 0");
 	    child.on("exit", function(exitCode){
 	    	if(exitCode < 0){
+	    		console.log("Kavi check 1");
 	    		res.end("SAT");
+	    	}else{
+	    		console.log("Kavi check 2");
 	    	}
 	    });
 	    child.stdout.pipe(res);

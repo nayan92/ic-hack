@@ -210,13 +210,20 @@ public class MenuActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String url = s.toString();
-            Log.d("SITTING", "INSIDE recognise CASE");
-            Log.d("SITTING","Just before creating the asyncplayer");
-            AsyncPlayer ap = new AsyncPlayer("MyTest");
-            Log.d("SITTING","Just after creating the asyncplayer");
-            ap.play(parent, Uri.parse(url), false, AudioManager.STREAM_MUSIC);
-            return url;
+            String responseString = s.toString();
+            String strippedResponseString = responseString.trim();
+            if(strippedResponseString.isEmpty()){
+                // Error, empty
+                Log.d("SITTING", "This isn't a musical file, jimmy.");
+            } else {
+                Log.d("SITTING", "INSIDE recognise CASE");
+                Log.d("SITTING","Just before creating the asyncplayer");
+                AsyncPlayer ap = new AsyncPlayer("MyTest");
+                Log.d("SITTING","Just after creating the asyncplayer");
+                ap.play(parent, Uri.parse(strippedResponseString), false, AudioManager.STREAM_MUSIC);
+            }
+
+            return strippedResponseString;
         }
 
     }
