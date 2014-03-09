@@ -20,6 +20,7 @@ public class TakePictureActivity extends Activity {
 
         // start the actual camera stuff.
         takePicture();
+
     }
 
     private static final int TAKE_PICTURE_REQUEST = 1;
@@ -48,8 +49,15 @@ public class TakePictureActivity extends Activity {
         final File pictureFile = new File(picturePath);
 
         if (pictureFile.exists()) {
-            // The picture is ready; process it.
+            Log.d("SITTING", "Picture exists and its path is: " + picturePath);
+            Intent result = new Intent();
+            result.putExtra("result", picturePath);
+            setResult(0,result);
+            finish();
+            // The picture is ready; process it. TODO
         } else {
+            Log.d("SITTING", "Picture doesnt exist.");
+
             // The file does not exist yet. Before starting the file observer, you
             // can update your UI to let the user know that the application is
             // waiting for the picture (for example, by displaying the thumbnail
@@ -71,6 +79,8 @@ public class TakePictureActivity extends Activity {
                                 && affectedFile.equals(pictureFile));
 
                         if (isFileWritten) {
+                            Log.d("SITTING", "File written.");
+
                             stopWatching();
 
                             // Now that the file is ready, recursively call
@@ -81,6 +91,10 @@ public class TakePictureActivity extends Activity {
                                     processPictureWhenReady(picturePath);
                                 }
                             });
+                        } else {
+                            // fire not written.
+                            Log.d("SITTING", "File not written.");
+
                         }
                     }
                 }
