@@ -17,7 +17,14 @@
 package com.sat.sonata;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AsyncPlayer;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.provider.MediaStore;
@@ -28,17 +35,34 @@ import android.view.MenuItem;
 
 import com.google.android.glass.media.CameraManager;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Activity showing the options menu.
  */
 public class MenuActivity extends Activity {
 
+    private String imagePath;
+    private MenuActivity parent = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("SITTING","Creating menuActivity");
+        //imagePath = savedInstanceState.getString("image");
+        //Log.d("SITTING", imagePath);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -60,11 +84,40 @@ public class MenuActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.stop:
                 Log.d("SITTING", "Inside stop case");
-
                 //stopService(new Intent(this, SonataService.class));
                 return true;
             case R.id.recognise:
-                Log.d("SITTING", "INSIDE recognise CASE");
+                String imagePath = getIntent().getStringExtra("image");
+                Log.d("SITTING", imagePath);
+
+                HttpPost postRequest = new HttpPost("http://129.31.195.224:8080/picUpload");
+                MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                try{
+                    
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    Bitmap bitmap;
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    bitmap = BitmapFactory.decodeFile(imagePath, options);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 75, bos);
+                    byte[] data = bos.toByteArray();
+                    ByteArrayBody bab = new ByteArrayBody(data, "music.jpg");
+
+                    reqEntity.addPart("music", bab);
+
+                    postRequest.setEntity(reqEntity);
+                    HttpPost[] posts = new HttpPost[1];
+                    posts[0] = postRequest;
+
+                    GetImageTask getImageTask = new GetImageTask();
+                    getImageTask.execute(posts);
+
+                }
+                catch(Exception e){
+                    Log.v("Exception in Image", ""+e);
+//                    reqEntity.addPart("picture", new StringBody(""));
+                }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -138,4 +191,34 @@ public class MenuActivity extends Activity {
         // Nothing else to do, closing the Activity.
         finish();
     }
+
+    public class GetImageTask extends AsyncTask {
+
+        @Override
+        protected String doInBackground(Object[] params) {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost post = (HttpPost)params[0];
+            post.setHeader("type", "image/jpeg");
+            StringBuilder s = new StringBuilder();
+            try {
+                HttpResponse response = httpClient.execute(post);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                String sResponse;
+                while ((sResponse = reader.readLine()) != null) {
+                    s = s.append(sResponse);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String url = s.toString();
+            Log.d("SITTING", "INSIDE recognise CASE");
+            Log.d("SITTING","Just before creating the asyncplayer");
+            AsyncPlayer ap = new AsyncPlayer("MyTest");
+            Log.d("SITTING","Just after creating the asyncplayer");
+            ap.play(parent, Uri.parse(url), false, AudioManager.STREAM_MUSIC);
+            return url;
+        }
+
+    }
+
 }
