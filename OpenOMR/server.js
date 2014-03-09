@@ -27,6 +27,11 @@ app.post('/picupload', function(req, res) {
 	  var newPath = __dirname + "/uploads/"+nextFileCounter+".jpg";
 	  fs.writeFile(newPath, data, function (err) {
 	    var child = spawn('bash', ['translate.sh', 'uploads/'+nextFileCounter+".jpg", nextFileCounter++, 'http://129.31.195.224:'+server.address().port]);
+	    child.on("exit", function(exitCode){
+	    	if(exitCode < 0){
+	    		res.end("SAT");
+	    	}
+	    });
 	    child.stdout.pipe(res);
 	  });
 	});
