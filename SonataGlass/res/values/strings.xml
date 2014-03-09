@@ -5,4 +5,5 @@
     <string name="start_stopwatch">recognise music</string>
     <string name="stop">Stop Music</string>
     <string name="take_photo">take a photo</string>
+    <string name="upload_photo">Play</string>
 </resources>

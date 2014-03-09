@@ -26,13 +26,14 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 /**
  * Service owning the LiveCard living in the timeline.
  */
-public class StopwatchService extends Service {
+public class SonataService extends Service {
 
-    private static final String TAG = "StopwatchService";
+    private static final String TAG = "SonataService";
     private static final String LIVE_CARD_TAG = "stopwatch";
 
     private ChronometerDrawer mCallback;
@@ -72,10 +73,14 @@ public class StopwatchService extends Service {
 //            Log.d("SITTING", "Starting TakePictureActivity from the service");
 //            startActivity(cameraIntent);
 //
+//            RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.card_picture_taken);
+//            views.setTextViewText(R.id.picture_taken_view,"Sitting across there");
+//            mLiveCard.setViews(views);
+
 //            Intent menuIntent = new Intent(this, MenuActivity.class);
 //            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //            mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
-
+//
 //            mLiveCard.publish(PublishMode.REVEAL);
 //            Log.d(TAG, "Done publishing LiveCard");
 //        } else {
@@ -89,14 +94,14 @@ public class StopwatchService extends Service {
 
     @Override
     public void onDestroy() {
-        if (mLiveCard != null && mLiveCard.isPublished()) {
-            Log.d(TAG, "Unpublishing LiveCard");
-            if (mCallback != null) {
-                mLiveCard.getSurfaceHolder().removeCallback(mCallback);
-            }
-            mLiveCard.unpublish();
-            mLiveCard = null;
-        }
+//        if (mLiveCard != null && mLiveCard.isPublished()) {
+//            Log.d(TAG, "Unpublishing LiveCard");
+//            if (mCallback != null) {
+//                mLiveCard.getSurfaceHolder().removeCallback(mCallback);
+//            }
+//            mLiveCard.unpublish();
+//            mLiveCard = null;
+//        }
         super.onDestroy();
     }
 }

@@ -16,12 +16,12 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/recognise"
+        android:title="@string/upload_photo"
+        android:icon="@drawable/ic_lap" />
+    <item
         android:id="@+id/stop"
         android:title="@string/stop"
         android:icon="@drawable/ic_stop" />
-    <item
-        android:id="@+id/photo"
-        android:title="@string/take_photo"
-        android:icon="@drawable/ic_lap" />
 
 </menu>
