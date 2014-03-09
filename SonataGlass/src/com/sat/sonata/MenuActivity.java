@@ -38,6 +38,7 @@ public class MenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -58,10 +59,12 @@ public class MenuActivity extends Activity {
         // Handle item selection.
         switch (item.getItemId()) {
             case R.id.stop:
-                stopService(new Intent(this, StopwatchService.class));
+                Log.d("SITTING", "Inside stop case");
+
+                //stopService(new Intent(this, SonataService.class));
                 return true;
-            case R.id.photo:
-                Log.e("PHOTOMANAGER", "INSIDE PHOTO CASE");
+            case R.id.recognise:
+                Log.d("SITTING", "INSIDE recognise CASE");
             default:
                 return super.onOptionsItemSelected(item);
         }
