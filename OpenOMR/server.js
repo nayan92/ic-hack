@@ -29,8 +29,8 @@ app.get('/ls', function(req, res) {
 })
 
 app.post('/picupload', function(req, res) {
-	console.log(JSON.stringify(req.files));
-	fs.readFile(req.files.music.path, function (err, data) {	  // ...
+	console.log(JSON.stringify(server.address()));
+	fs.readFile(req.files.music.path, function (err, data) {
 	  var newPath = __dirname + "/uploads/"+nextFileCounter;
 	  fs.writeFile(newPath, data, function (err) {
 	    var child = spawn('bash', ['translate.sh', 'uploads/'+nextFileCounter, nextFileCounter++, 'http://localhost:'+server.address().port]);

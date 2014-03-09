@@ -18,6 +18,9 @@ package com.sat.sonata;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AsyncPlayer;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.provider.MediaStore;
@@ -60,11 +63,16 @@ public class MenuActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.stop:
                 Log.d("SITTING", "Inside stop case");
-
                 //stopService(new Intent(this, SonataService.class));
                 return true;
             case R.id.recognise:
                 Log.d("SITTING", "INSIDE recognise CASE");
+                String url = "http://129.31.195.224:8080/0.wav";
+                Log.d("SITTING","Just before creating the asyncplayer");
+                AsyncPlayer ap = new AsyncPlayer("MyTest");
+                Log.d("SITTING","Just after creating the asyncplayer");
+                ap.play(this, Uri.parse(url), false, AudioManager.STREAM_MUSIC);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
