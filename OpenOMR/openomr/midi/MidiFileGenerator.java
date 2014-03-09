@@ -56,8 +56,8 @@ public abstract class MidiFileGenerator
 		sequencer.setTempoInBPM(tempo);
 	}
 
-    public void saveFile(){
-        File f = new File("nayanmidifile.mid");
+    public void saveFile(String outputFileName){
+        File f = new File(outputFileName+".mid");
         try {
             MidiSystem.write(sequencer.getSequence(),1,f);
         } catch (IOException e) {

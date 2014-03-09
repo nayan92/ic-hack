@@ -47,9 +47,9 @@ Running the java program which reads image and produces MIDI file
 	```
 3. Run the class CreateMidiForImage (Change the final argument to the picture you desire)
 	```
-	java -classpath lib/joone-engine.jar:lib/jcommon-1.0.22.jar:.:lib/jfreechart-1.0.2.jar -Xmx256m openomr/openomr/CreateMidiForImage testImages/demo/scale.png
+	java -classpath lib/joone-engine.jar:lib/jcommon-1.0.22.jar:.:lib/jfreechart-1.0.2.jar -Xmx256m openomr/openomr/CreateMidiForImage testImages/demo/scale.png myMidiFile
 	```
-4. The output will be stored as a file named nayanmidifile.mid in the directory OpenOMR. Will be made configurable soon. You can now play this with your favorite MIDI player.
+4. The output will be stored as a file named myMidiFile.mid (can be changed through last argument of above command) in the directory OpenOMR. You can now play this with your favorite MIDI player.
 
 
 Enjoy!!

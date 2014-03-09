@@ -145,7 +145,7 @@ public class ToolBar extends JPanel
 				LinkedList<Staves> staveList = staveDetection.getStaveList();
 				scoreGen = new ScoreGenerator(staveList);
 				scoreGen.makeSong(64);
-                scoreGen.saveFile();
+                scoreGen.saveFile("midiFileCreatedFromGui");
 				//scoreGen.start();
 			} 
 			catch (MidiUnavailableException e)

@@ -21,6 +21,7 @@ public class CreateMidiForImage {
     public static void main(String[]args){
         BufferedImage buffImage;
         String filename = args[0];
+        String outputFileName = args[1];
         GUI.setANNInterrogator(new ANNInterrogator());
         try {
             buffImage = ImageIO.read(new File(filename));
@@ -50,7 +51,7 @@ public class CreateMidiForImage {
                     LinkedList<Staves> staveList = staveDetection.getStaveList();
                     scoreGen = new ScoreGenerator(staveList);
                     scoreGen.makeSong(64);
-                    scoreGen.saveFile();
+                    scoreGen.saveFile(outputFileName);
                     //scoreGen.start();
 
 
