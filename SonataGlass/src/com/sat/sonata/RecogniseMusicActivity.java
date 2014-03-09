@@ -37,7 +37,6 @@ public class RecogniseMusicActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         String path = data.getStringExtra("result");
         Log.d("SITTING", "The path that was returned is: " + path + " sitting across there like a baws");
-
         mLiveCard = timelineManager.createLiveCard(LIVE_CARD_TAG);
 
         RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.card_picture_taken);
@@ -45,6 +44,7 @@ public class RecogniseMusicActivity extends Activity {
         mLiveCard.setViews(views);
 
         Intent menuIntent = new Intent(this, MenuActivity.class);
+        menuIntent.putExtra("image", path);
 
         mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
         mLiveCard.publish(LiveCard.PublishMode.REVEAL);

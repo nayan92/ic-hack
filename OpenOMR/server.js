@@ -15,25 +15,18 @@ var server = app.listen(8080, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
-
-app.get('/recogniseMusic', function(req, res){
-  var child = spawn('bash', ['translate.sh', nextFileCounter++, 'http://localhost:'+server.address().port]);
-  child.stdout.pipe(res);
-  
-});
-
-
 app.get('/ls', function(req, res) {
   var child = spawn('ls', ['-al']);
   child.stdout.pipe(res);
 })
 
 app.post('/picupload', function(req, res) {
-	console.log(JSON.stringify(server.address()));
+	console.log(new Date());
+	console.log(JSON.stringify(req.files));
 	fs.readFile(req.files.music.path, function (err, data) {
-	  var newPath = __dirname + "/uploads/"+nextFileCounter;
+	  var newPath = __dirname + "/uploads/"+nextFileCounter+".jpg";
 	  fs.writeFile(newPath, data, function (err) {
-	    var child = spawn('bash', ['translate.sh', 'uploads/'+nextFileCounter, nextFileCounter++, 'http://localhost:'+server.address().port]);
+	    var child = spawn('bash', ['translate.sh', 'uploads/'+nextFileCounter+".jpg", nextFileCounter++, 'http://129.31.195.224:'+server.address().port]);
 	    child.stdout.pipe(res);
 	  });
 	});
