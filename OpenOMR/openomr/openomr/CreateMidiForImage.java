@@ -57,7 +57,6 @@ public class CreateMidiForImage {
 
             }
 
-            return;
         } catch (IOException e) {
             System.out.println("IO Exception while trying to read the image file to process");
             e.printStackTrace();
@@ -70,5 +69,8 @@ public class CreateMidiForImage {
         {
             e.printStackTrace();
         }
+
+        System.out.println("At the very end");
+        System.exit(0);
     }
 }

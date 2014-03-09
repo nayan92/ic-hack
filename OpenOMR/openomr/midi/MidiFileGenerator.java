@@ -64,6 +64,7 @@ public abstract class MidiFileGenerator
             System.out.println("IOException encountered in generating the midi file");
             e.printStackTrace();
         }
+        System.out.println("Finished saving file");
     }
 
 	public void start()
