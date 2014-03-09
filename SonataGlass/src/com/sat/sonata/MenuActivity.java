@@ -88,6 +88,7 @@ public class MenuActivity extends Activity {
                 return true;
             case R.id.recognise:
                 String imagePath = getIntent().getStringExtra("image");
+                getIntent().removeExtra("image");
                 Log.d("SITTING", imagePath);
 
                 HttpPost postRequest = new HttpPost("http://129.31.195.224:8080/picUpload");
@@ -220,6 +221,7 @@ public class MenuActivity extends Activity {
                 Log.d("SITTING","Just before creating the asyncplayer");
                 AsyncPlayer ap = new AsyncPlayer("MyTest");
                 Log.d("SITTING","Just after creating the asyncplayer");
+                Log.d("SITTING","URL from SERVER: "+strippedResponseString);
                 ap.play(parent, Uri.parse(strippedResponseString), false, AudioManager.STREAM_MUSIC);
             }
 
